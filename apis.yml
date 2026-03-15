@@ -1,0 +1,14 @@
+name: Akri
+description: A Kubernetes resource interface for exposing leaf devices such as IP
+  cameras and USB devices as resources in a Kubernetes cluster, enabling dynamic discovery
+  and utilization of IoT edge devices.
+url: https://github.com/project-akri/akri
+tags:
+- Kubernetes
+- IoT
+- Edge Computing
+- Device Management
+created: '2025'
+modified: '2025'
+apis: []
+common: []

@@ -1,14 +1,25 @@
+aid: akri
+url: >-
+  https://raw.githubusercontent.com/api-evangelist/akri/refs/heads/main/apis.yml
 name: Akri
-description: A Kubernetes resource interface for exposing leaf devices such as IP
-  cameras and USB devices as resources in a Kubernetes cluster, enabling dynamic discovery
-  and utilization of IoT edge devices.
-url: https://github.com/project-akri/akri
 tags:
-- Kubernetes
-- IoT
-- Edge Computing
-- Device Management
-created: '2025'
-modified: '2025'
+  - Kubernetes
+  - IoT
+  - Edge Computing
+  - Device Management
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+description: >-
+  A Kubernetes resource interface for exposing leaf devices such as IP cameras
+  and USB devices as resources in a Kubernetes cluster, enabling dynamic
+  discovery and utilization of IoT edge devices.
+created: '2025-01-01'
+modified: '2026-03-16'
+specificationVersion: '0.19'
 apis: []
-common: []
+common:
+  - url: https://github.com/project-akri/akri
+    type: GitHubOrganization
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

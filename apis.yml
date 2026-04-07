@@ -3,10 +3,10 @@ url: >-
   https://raw.githubusercontent.com/api-evangelist/akri/refs/heads/main/apis.yml
 name: Akri
 tags:
-  - Kubernetes
-  - IoT
-  - Edge Computing
   - Device Management
+  - Edge Computing
+  - IoT
+  - Kubernetes
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 description: >-

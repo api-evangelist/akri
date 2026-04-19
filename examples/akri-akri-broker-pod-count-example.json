@@ -1,0 +1,5 @@
+{
+  "configuration": "onvif-camera",
+  "node": "node-01",
+  "value": 1
+}

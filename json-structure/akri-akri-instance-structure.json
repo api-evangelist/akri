@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/akri/refs/heads/main/json-structure/akri-akri-instance-structure.json",
+  "name": "AkriInstance",
+  "type": "object",
+  "description": "Akri Instance custom resource (instances.akri.sh) representing a single discovered device. Automatically created and destroyed as devices appear and disappear.",
+  "properties": {
+    "apiVersion": {
+      "type": "string",
+      "description": "API version of the Akri Instance resource",
+      "example": "akri.sh/v0"
+    },
+    "kind": {
+      "type": "string",
+      "description": "Resource kind",
+      "example": "Instance"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Kubernetes object metadata",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Instance name in format configuration-name-hash",
+          "example": "onvif-camera-a1b2c3"
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Kubernetes namespace",
+          "example": "default"
+        }
+      }
+    },
+    "spec": {
+      "type": "object",
+      "description": "Instance specification",
+      "properties": {
+        "configurationName": {
+          "type": "string",
+          "description": "Name of the parent Configuration resource",
+          "example": "onvif-camera"
+        },
+        "shared": {
+          "type": "boolean",
+          "description": "Whether device is shared across multiple nodes",
+          "example": false
+        },
+        "nodes": {
+          "type": "array",
+          "description": "List of nodes that can access this device",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "node-01",
+            "node-02"
+          ]
+        },
+        "deviceUsage": {
+          "type": "object",
+          "description": "Map of slot names to broker pod names",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "metadata": {
+          "type": "object",
+          "description": "Device-specific metadata from discovery",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "apiVersion": "akri.sh/v0",
+  "kind": "Instance",
+  "metadata": {
+    "name": "onvif-camera-a1b2c3",
+    "namespace": "default"
+  },
+  "spec": {
+    "configurationName": "onvif-camera",
+    "shared": false,
+    "nodes": [
+      "node-01"
+    ],
+    "deviceUsage": {},
+    "metadata": {}
+  }
+}

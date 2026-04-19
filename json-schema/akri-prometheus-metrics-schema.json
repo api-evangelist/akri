@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/akri/refs/heads/main/json-schema/akri-prometheus-metrics-schema.json",
+  "title": "PrometheusMetrics",
+  "description": "Prometheus text exposition format containing Akri metrics. Includes akri_instance_count (gauge), akri_discovery_response_result (counter), akri_discovery_response_time (histogram), and akri_broker_pod_count (gauge) plus standard process metrics.",
+  "type": "string"
+}

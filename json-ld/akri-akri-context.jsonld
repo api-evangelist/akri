@@ -1,0 +1,93 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "akri": "https://akri.sh/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "AkriDiscoveryResponseResult": "akri:AkriDiscoveryResponseResult",
+    "AkriInstanceCount": "akri:AkriInstanceCount",
+    "AkriBrokerPodCount": "akri:AkriBrokerPodCount",
+    "AkriInstance": "akri:AkriInstance",
+    "AkriConfiguration": "akri:AkriConfiguration",
+    "AkriDiscoveryResponseTime": "akri:AkriDiscoveryResponseTime",
+    "apiVersion": {
+      "@id": "akri:apiVersion",
+      "@type": "xsd:string"
+    },
+    "capacity": {
+      "@id": "akri:capacity",
+      "@type": "xsd:integer"
+    },
+    "configuration": {
+      "@id": "akri:configuration",
+      "@type": "xsd:string"
+    },
+    "configurationName": {
+      "@id": "akri:configurationName",
+      "@type": "xsd:string"
+    },
+    "deviceUsage": {
+      "@id": "akri:deviceUsage",
+      "@type": "@id"
+    },
+    "discoveryDetails": {
+      "@id": "akri:discoveryDetails",
+      "@type": "xsd:string"
+    },
+    "discoveryHandler": {
+      "@id": "akri:discoveryHandler",
+      "@type": "@id"
+    },
+    "discoveryProperties": {
+      "@id": "akri:discoveryProperties",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "kind": {
+      "@id": "akri:kind",
+      "@type": "xsd:string"
+    },
+    "le": {
+      "@id": "akri:le",
+      "@type": "xsd:string"
+    },
+    "metadata": {
+      "@id": "akri:metadata",
+      "@type": "@id"
+    },
+    "name": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "namespace": {
+      "@id": "akri:namespace",
+      "@type": "xsd:string"
+    },
+    "node": {
+      "@id": "akri:node",
+      "@type": "xsd:string"
+    },
+    "nodes": {
+      "@id": "akri:nodes",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "result": {
+      "@id": "akri:result",
+      "@type": "xsd:string"
+    },
+    "shared": {
+      "@id": "akri:shared",
+      "@type": "xsd:string"
+    },
+    "spec": {
+      "@id": "akri:spec",
+      "@type": "@id"
+    },
+    "value": {
+      "@id": "akri:value",
+      "@type": "xsd:decimal"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/akri/refs/heads/main/json-schema/akri-akri-broker-pod-count-schema.json",
+  "title": "AkriBrokerPodCount",
+  "description": "Gauge tracking the number of broker pods per configuration and node",
+  "type": "object",
+  "properties": {
+    "configuration": {
+      "type": "string",
+      "description": "Name of the Akri Configuration resource",
+      "example": "onvif-camera"
+    },
+    "node": {
+      "type": "string",
+      "description": "Kubernetes node name",
+      "example": "node-01"
+    },
+    "value": {
+      "type": "number",
+      "description": "Current count of broker pods",
+      "example": 1
+    }
+  }
+}

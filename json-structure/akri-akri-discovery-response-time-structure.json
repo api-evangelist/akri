@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/akri/refs/heads/main/json-structure/akri-akri-discovery-response-time-structure.json",
+  "name": "AkriDiscoveryResponseTime",
+  "type": "object",
+  "description": "Histogram of Discovery Handler response latency in seconds",
+  "properties": {
+    "configuration": {
+      "type": "string",
+      "description": "Name of the Akri Configuration resource",
+      "example": "onvif-camera"
+    },
+    "le": {
+      "type": "string",
+      "description": "Histogram bucket upper bound in seconds",
+      "example": "0.005"
+    },
+    "value": {
+      "type": "double",
+      "description": "Count of observations within this bucket",
+      "example": 10
+    }
+  }
+}

@@ -1,0 +1,253 @@
+vocabulary: "1.0.0"
+
+info:
+  provider: Akri
+  description: >-
+    Unified taxonomy for the Akri CNCF Sandbox project covering device
+    discovery protocols, Kubernetes CRDs, metrics API, and edge computing
+    capability workflows.
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+operational:
+  apis:
+    - namespace: akri-metrics
+      version: "0.12.20"
+      baseUrl: "http://localhost:8080"
+      status: active
+      description: Prometheus metrics endpoint for Akri Agent and Controller
+    - namespace: akri-configuration-crd
+      version: "v0"
+      baseUrl: "https://kubernetes.io"
+      status: active
+      description: Akri Configuration custom resource for device discovery
+    - namespace: akri-instance-crd
+      version: "v0"
+      baseUrl: "https://kubernetes.io"
+      status: active
+      description: Akri Instance custom resource representing discovered devices
+
+  resources:
+    - name: metrics
+      apis:
+        - akri-metrics
+      actions:
+        - get
+      description: Prometheus metrics for Akri components
+    - name: configurations
+      apis:
+        - akri-configuration-crd
+      actions:
+        - create
+        - get
+        - list
+        - update
+        - delete
+      description: Akri Configuration CRD resources specifying device discovery
+    - name: instances
+      apis:
+        - akri-instance-crd
+      actions:
+        - get
+        - list
+      description: Akri Instance CRD resources representing discovered devices
+    - name: discovery-handlers
+      apis:
+        - akri-configuration-crd
+      actions:
+        - configure
+      description: Protocol-specific handlers for ONVIF, OPC UA, and udev device discovery
+
+  actions:
+    - name: get
+      httpMethods:
+        - GET
+      pattern: read
+      description: Retrieve a resource or collection
+    - name: list
+      httpMethods:
+        - GET
+      pattern: read
+      description: List all resources of a type
+    - name: create
+      httpMethods:
+        - POST
+      pattern: write
+      description: Create a new resource
+    - name: update
+      httpMethods:
+        - PUT
+        - PATCH
+      pattern: write
+      description: Update an existing resource
+    - name: delete
+      httpMethods:
+        - DELETE
+      pattern: destructive
+      description: Delete a resource
+    - name: configure
+      httpMethods:
+        - POST
+        - PUT
+      pattern: write
+      description: Configure a discovery handler with filters and broker specs
+
+  schemas:
+    core:
+      - name: AkriConfiguration
+        description: Kubernetes CRD for device discovery configuration
+        keyProperties:
+          - discoveryHandler
+          - capacity
+          - brokerSpec
+      - name: AkriInstance
+        description: Kubernetes CRD representing a discovered device
+        keyProperties:
+          - configurationName
+          - shared
+          - nodes
+          - deviceUsage
+          - metadata
+    metrics:
+      - name: AkriInstanceCount
+        description: Gauge metric for discovered instance count
+        keyProperties:
+          - configuration
+          - shared
+          - value
+      - name: AkriDiscoveryResponseResult
+        description: Counter metric for discovery handler results
+        keyProperties:
+          - configuration
+          - result
+          - value
+      - name: AkriDiscoveryResponseTime
+        description: Histogram metric for discovery latency
+        keyProperties:
+          - configuration
+          - le
+          - value
+      - name: AkriBrokerPodCount
+        description: Gauge metric for broker pod count
+        keyProperties:
+          - configuration
+          - node
+          - value
+
+  parameters:
+    identifiers:
+      - name: configuration
+        description: Name of the Akri Configuration resource
+        type: string
+      - name: node
+        description: Kubernetes node name
+        type: string
+    filters:
+      - name: shared
+        description: Whether device is shared across multiple nodes
+        type: boolean
+      - name: result
+        description: Discovery response result filter (success/failure)
+        type: string
+
+  enums:
+    discoveryHandlers:
+      - onvif
+      - opcua
+      - udev
+      - debug-echo
+    discoveryResults:
+      - success
+      - failure
+    architectures:
+      - amd64
+      - arm64v8
+      - arm32v7
+
+  authentication:
+    schemes:
+      - name: None
+        description: Public metrics endpoint with no authentication
+        apis:
+          - akri-metrics
+      - name: Kubernetes RBAC
+        description: Kubernetes role-based access control for CRD operations
+        apis:
+          - akri-configuration-crd
+          - akri-instance-crd
+
+capability:
+  workflows:
+    - name: Edge Device Monitoring
+      file: capabilities/edge-device-monitoring.yaml
+      description: Monitor Akri edge device discovery and broker health
+      apisComined:
+        - akri-metrics
+      toolCount: 1
+      personas:
+        - Edge Computing Operator
+
+  personas:
+    - id: edge-computing-operator
+      name: Edge Computing Operator
+      description: >-
+        Manages Kubernetes clusters with Akri for IoT and edge device
+        workloads. Monitors device discovery health, broker pod lifecycle,
+        and cluster resource utilization.
+      workflows:
+        - Edge Device Monitoring
+
+  domains:
+    - name: Device Discovery
+      description: ONVIF, OPC UA, and udev device discovery protocols
+      resources:
+        - configurations
+        - instances
+        - discovery-handlers
+    - name: Monitoring
+      description: Prometheus metrics for Akri component health
+      resources:
+        - metrics
+
+  namespaces:
+    - name: akri-metrics
+      type: consumed
+      baseUri: "http://localhost:8080"
+    - name: akri-edge-monitoring-api
+      type: rest
+      port: 8080
+    - name: akri-edge-monitoring-mcp
+      type: mcp
+      port: 9090
+
+  binds:
+    - name: AKRI_METRICS_HOST
+      description: Hostname or IP of the Akri metrics server
+      workflows:
+        - Edge Device Monitoring
+
+crossReference:
+  - resource: metrics
+    operations:
+      - get-metrics
+    workflows:
+      - Edge Device Monitoring
+    personas:
+      - Edge Computing Operator
+  - resource: configurations
+    operations:
+      - create
+      - get
+      - list
+      - update
+      - delete
+    workflows: []
+    personas:
+      - Edge Computing Operator
+  - resource: instances
+    operations:
+      - get
+      - list
+    workflows: []
+    personas:
+      - Edge Computing Operator

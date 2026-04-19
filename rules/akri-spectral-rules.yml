@@ -1,0 +1,225 @@
+rules:
+  # INFO / METADATA
+  info-title-required:
+    description: Info title must be defined
+    severity: error
+    given: "$.info"
+    then:
+      field: title
+      function: truthy
+
+  info-description-required:
+    description: Info description must be defined and non-empty
+    severity: warn
+    given: "$.info"
+    then:
+      field: description
+      function: truthy
+
+  info-version-required:
+    description: Info version must be defined
+    severity: error
+    given: "$.info"
+    then:
+      field: version
+      function: truthy
+
+  info-contact-required:
+    description: Info should include contact information
+    severity: warn
+    given: "$.info"
+    then:
+      field: contact
+      function: truthy
+
+  info-license-required:
+    description: Info should include license information (Apache 2.0 for CNCF projects)
+    severity: warn
+    given: "$.info"
+    then:
+      field: license
+      function: truthy
+
+  # OPENAPI VERSION
+  openapi-version-3:
+    description: Must use OpenAPI 3.0.x
+    severity: error
+    given: "$"
+    then:
+      field: openapi
+      function: pattern
+      functionOptions:
+        match: "^3\\.0\\."
+
+  # SERVERS
+  servers-required:
+    description: Servers must be defined
+    severity: error
+    given: "$"
+    then:
+      field: servers
+      function: truthy
+
+  servers-https-required:
+    description: Server URLs should use HTTPS (or localhost for metrics)
+    severity: warn
+    given: "$.servers[*]"
+    then:
+      field: url
+      function: pattern
+      functionOptions:
+        match: "^(https://|http://localhost)"
+
+  # PATHS — NAMING CONVENTIONS
+  paths-kebab-case:
+    description: Path segments should use kebab-case
+    severity: warn
+    given: "$.paths[*]~"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(/[a-z0-9-{}]+)+$"
+
+  paths-no-trailing-slash:
+    description: Paths must not have a trailing slash
+    severity: error
+    given: "$.paths[*]~"
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "/$"
+
+  # OPERATIONS
+  operation-summary-required:
+    description: Operations must have a summary
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete,head,options]"
+    then:
+      field: summary
+      function: truthy
+
+  operation-description-required:
+    description: Operations should have a description
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete,head,options]"
+    then:
+      field: description
+      function: truthy
+
+  operation-operationid-required:
+    description: Operations must have an operationId
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete,head,options]"
+    then:
+      field: operationId
+      function: truthy
+
+  operation-operationid-camel-case:
+    description: OperationId should use camelCase
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete,head,options].operationId"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]+$"
+
+  operation-tags-required:
+    description: Operations must have at least one tag
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete,head,options]"
+    then:
+      field: tags
+      function: truthy
+
+  operation-summary-akri-prefix:
+    description: Operation summaries should start with 'Akri'
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete,head,options].summary"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^Akri "
+
+  # TAGS
+  tags-defined:
+    description: Tags should be defined at the global level
+    severity: warn
+    given: "$"
+    then:
+      field: tags
+      function: truthy
+
+  tags-description-required:
+    description: Global tags should have descriptions
+    severity: warn
+    given: "$.tags[*]"
+    then:
+      field: description
+      function: truthy
+
+  # PARAMETERS
+  parameter-description-required:
+    description: Parameters must have a description
+    severity: error
+    given: "$.paths[*][*].parameters[*]"
+    then:
+      field: description
+      function: truthy
+
+  # RESPONSES
+  response-success-required:
+    description: Operations must have at least one 2xx response
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: responses
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          patternProperties:
+            "^2[0-9]{2}$": {}
+          minProperties: 1
+
+  response-description-required:
+    description: All responses must have a description
+    severity: error
+    given: "$.paths[*][*].responses[*]"
+    then:
+      field: description
+      function: truthy
+
+  # SCHEMAS
+  schema-description-required:
+    description: Top-level schemas should have descriptions
+    severity: warn
+    given: "$.components.schemas[*]"
+    then:
+      field: description
+      function: truthy
+
+  schema-type-required:
+    description: Schemas should define a type
+    severity: warn
+    given: "$.components.schemas[*]"
+    then:
+      field: type
+      function: truthy
+
+  # GENERAL QUALITY
+  no-empty-descriptions:
+    description: Descriptions must not be empty strings
+    severity: error
+    given: "$..description"
+    then:
+      function: pattern
+      functionOptions:
+        match: ".+"
+
+  examples-encouraged:
+    description: Schema properties should have examples
+    severity: info
+    given: "$.components.schemas[*].properties[*]"
+    then:
+      field: example
+      function: truthy

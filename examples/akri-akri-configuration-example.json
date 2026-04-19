@@ -1,0 +1,21 @@
+{
+  "apiVersion": "akri.sh/v0",
+  "kind": "Configuration",
+  "metadata": {
+    "name": "onvif-camera",
+    "namespace": "default"
+  },
+  "spec": {
+    "discoveryHandler": {
+      "name": "onvif",
+      "discoveryDetails": "ipAddresses:\\n  action: Exclude\\n  items:\\n  - 10.0.0.1",
+      "discoveryProperties": [
+        {
+          "name": "USERNAME_LIST",
+          "value": "admin"
+        }
+      ]
+    },
+    "capacity": 1
+  }
+}

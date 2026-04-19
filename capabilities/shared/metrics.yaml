@@ -1,0 +1,72 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: Akri Metrics API
+  description: >-
+    Prometheus metrics endpoint for monitoring Akri device discovery and
+    broker pod lifecycle across Kubernetes cluster nodes.
+  tags:
+    - Akri
+    - Metrics
+    - Monitoring
+    - Kubernetes
+    - Edge Computing
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+binds:
+  - namespace: env
+    keys:
+      AKRI_METRICS_HOST: AKRI_METRICS_HOST
+
+capability:
+  consumes:
+    - type: http
+      namespace: akri-metrics
+      baseUri: "http://{{env.AKRI_METRICS_HOST}}:8080"
+      description: Akri Prometheus metrics endpoint
+      resources:
+        - name: metrics
+          path: /metrics
+          description: Prometheus metrics for Akri components
+          operations:
+            - name: get-metrics
+              method: GET
+              description: Get Prometheus-format metrics for Akri Agent, Controller, and broker pods
+              outputRawFormat: text
+              outputParameters:
+                - name: result
+                  type: string
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8100
+      namespace: akri-metrics-api
+      resources:
+        - path: /v1/metrics
+          name: metrics
+          description: Akri Prometheus metrics
+          operations:
+            - method: GET
+              name: get-metrics
+              description: Retrieve Prometheus metrics for all Akri components
+              call: "akri-metrics.get-metrics"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9100
+      namespace: akri-metrics-mcp
+      transport: http
+      tools:
+        - name: get-akri-metrics
+          description: Get Prometheus metrics from Akri Agent, Controller, and broker pods
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "akri-metrics.get-metrics"
+          outputParameters:
+            - type: object
+              mapping: "$."

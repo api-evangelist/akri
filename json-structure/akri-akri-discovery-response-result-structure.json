@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/akri/refs/heads/main/json-structure/akri-akri-discovery-response-result-structure.json",
+  "name": "AkriDiscoveryResponseResult",
+  "type": "object",
+  "description": "Counter for Discovery Handler success and failure responses",
+  "properties": {
+    "configuration": {
+      "type": "string",
+      "description": "Name of the Akri Configuration resource",
+      "example": "onvif-camera"
+    },
+    "result": {
+      "type": "string",
+      "description": "Result of the discovery response",
+      "enum": [
+        "success",
+        "failure"
+      ],
+      "example": "success"
+    },
+    "value": {
+      "type": "double",
+      "description": "Total count of responses",
+      "example": 42
+    }
+  }
+}

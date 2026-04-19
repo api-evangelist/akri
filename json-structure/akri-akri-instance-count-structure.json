@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/akri/refs/heads/main/json-structure/akri-akri-instance-count-structure.json",
+  "name": "AkriInstanceCount",
+  "type": "object",
+  "description": "Gauge tracking the number of discovered Akri instances per configuration",
+  "properties": {
+    "configuration": {
+      "type": "string",
+      "description": "Name of the Akri Configuration resource",
+      "example": "onvif-camera"
+    },
+    "shared": {
+      "type": "string",
+      "description": "Whether the device is shared across multiple nodes",
+      "example": "false"
+    },
+    "value": {
+      "type": "double",
+      "description": "Current count of discovered instances",
+      "example": 3
+    }
+  }
+}

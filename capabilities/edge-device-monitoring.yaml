@@ -1,0 +1,65 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: Akri Edge Device Monitoring
+  description: >-
+    Workflow capability for monitoring Akri edge device discovery and broker
+    health in Kubernetes clusters. Combines Prometheus metrics to provide
+    visibility into discovered instances, discovery handler performance, and
+    broker pod lifecycle for Edge Computing operators.
+  tags:
+    - Akri
+    - Edge Computing
+    - IoT
+    - Monitoring
+    - Kubernetes
+    - Device Management
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+binds:
+  - namespace: env
+    keys:
+      AKRI_METRICS_HOST: AKRI_METRICS_HOST
+
+capability:
+  consumes:
+    - import: akri-metrics
+      location: ./shared/metrics.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: akri-edge-monitoring-api
+      description: Unified REST API for Akri edge device monitoring.
+      resources:
+        - path: /v1/metrics
+          name: metrics
+          description: Akri Prometheus metrics for all components
+          operations:
+            - method: GET
+              name: get-metrics
+              description: Get all Akri Prometheus metrics
+              call: "akri-metrics.get-metrics"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: akri-edge-monitoring-mcp
+      transport: http
+      description: MCP server for AI-assisted Akri edge device monitoring.
+      tools:
+        - name: get-akri-metrics
+          description: >-
+            Get Prometheus metrics from Akri including instance discovery counts,
+            discovery handler success/failure rates, discovery latency, and
+            broker pod counts per configuration and node.
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "akri-metrics.get-metrics"
+          outputParameters:
+            - type: object
+              mapping: "$."

@@ -177,6 +177,8 @@ common:
   - name: CNCF Ecosystem
     description: CNCF Sandbox project integrating with cloud native tooling including K3s, MicroK8s, and standard Kubernetes
       distributions.
+- type: LLMsTxt
+  url: https://docs.akri.sh/llms.txt
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

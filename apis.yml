@@ -12,7 +12,7 @@ tags:
 - ONVIF
 - udev
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 description: Akri is a CNCF Sandbox project that exposes heterogeneous leaf devices (such as IP cameras and USB devices) as
   resources in a Kubernetes cluster. It enables dynamic discovery and utilization of IoT edge devices through protocol-specific
   Discovery Handlers for ONVIF, OPC UA, and udev, with automatic workload scheduling and high availability.

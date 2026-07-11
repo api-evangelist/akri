@@ -84,6 +84,8 @@ apis:
     include instance count, discovery response results and latency, and broker pod count. Supports Prometheus Operator ServiceMonitor
     for metric scraping.
 common:
+- type: DomainSecurity
+  url: security/akri-domain-security.yml
 - url: https://github.com/project-akri
   type: GitHubOrganization
 - url: https://github.com/project-akri/akri

@@ -1,0 +1,14 @@
+{
+  "provider": "akri",
+  "sources": [
+    "akri-metrics-api-openapi.yml"
+  ],
+  "outputs": [
+    "akri-metrics-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

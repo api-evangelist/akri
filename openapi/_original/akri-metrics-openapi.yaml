@@ -1,0 +1,262 @@
+openapi: 3.0.3
+info:
+  title: Akri Metrics API
+  description: >-
+    Prometheus metrics endpoint exposed by Akri Agent, Controller, and broker
+    pods. Metrics include instance count, discovery response results and
+    latency, and broker pod count for monitoring Akri deployments.
+  version: 0.12.20
+  contact:
+    name: Akri Community
+    url: https://github.com/project-akri/akri
+  license:
+    name: Apache 2.0
+    url: https://github.com/project-akri/akri/blob/main/LICENSE
+  x-generated-from: documentation
+servers:
+  - url: http://localhost:8080
+    description: Akri Agent/Controller metrics server (default port)
+paths:
+  /metrics:
+    get:
+      operationId: getMetrics
+      summary: Akri Get Prometheus Metrics
+      description: >-
+        Returns Prometheus-formatted metrics for the Akri Agent, Controller, or
+        broker pods. Includes instance discovery counts, discovery response
+        results, discovery latency histograms, and broker pod counts.
+      tags:
+        - Metrics
+      responses:
+        '200':
+          description: Prometheus metrics in text exposition format
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/PrometheusMetrics'
+              examples:
+                GetMetrics200Example:
+                  summary: Default getMetrics 200 response
+                  x-microcks-default: true
+                  value: |
+                    # HELP akri_instance_count Number of discovered Akri instances
+                    # TYPE akri_instance_count gauge
+                    akri_instance_count{configuration="onvif-camera",shared="false"} 3
+                    # HELP akri_discovery_response_result Discovery handler response results
+                    # TYPE akri_discovery_response_result counter
+                    akri_discovery_response_result{configuration="onvif-camera",result="success"} 42
+                    # HELP akri_discovery_response_time Discovery handler response latency
+                    # TYPE akri_discovery_response_time histogram
+                    akri_discovery_response_time_bucket{configuration="onvif-camera",le="0.005"} 10
+                    # HELP akri_broker_pod_count Number of broker pods deployed
+                    # TYPE akri_broker_pod_count gauge
+                    akri_broker_pod_count{configuration="onvif-camera",node="node-01"} 1
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    PrometheusMetrics:
+      title: PrometheusMetrics
+      type: string
+      description: >-
+        Prometheus text exposition format containing Akri metrics. Includes
+        akri_instance_count (gauge), akri_discovery_response_result (counter),
+        akri_discovery_response_time (histogram), and akri_broker_pod_count
+        (gauge) plus standard process metrics.
+      example: |
+        # HELP akri_instance_count Number of discovered Akri instances
+        # TYPE akri_instance_count gauge
+        akri_instance_count{configuration="onvif-camera",shared="false"} 3
+    AkriInstanceCount:
+      title: AkriInstanceCount
+      type: object
+      description: Gauge tracking the number of discovered Akri instances per configuration
+      properties:
+        configuration:
+          type: string
+          description: Name of the Akri Configuration resource
+          example: onvif-camera
+        shared:
+          type: string
+          description: Whether the device is shared across multiple nodes
+          example: "false"
+        value:
+          type: number
+          description: Current count of discovered instances
+          example: 3
+    AkriDiscoveryResponseResult:
+      title: AkriDiscoveryResponseResult
+      type: object
+      description: Counter for Discovery Handler success and failure responses
+      properties:
+        configuration:
+          type: string
+          description: Name of the Akri Configuration resource
+          example: onvif-camera
+        result:
+          type: string
+          description: Result of the discovery response
+          enum:
+            - success
+            - failure
+          example: success
+        value:
+          type: number
+          description: Total count of responses
+          example: 42
+    AkriDiscoveryResponseTime:
+      title: AkriDiscoveryResponseTime
+      type: object
+      description: Histogram of Discovery Handler response latency in seconds
+      properties:
+        configuration:
+          type: string
+          description: Name of the Akri Configuration resource
+          example: onvif-camera
+        le:
+          type: string
+          description: Histogram bucket upper bound in seconds
+          example: "0.005"
+        value:
+          type: number
+          description: Count of observations within this bucket
+          example: 10
+    AkriBrokerPodCount:
+      title: AkriBrokerPodCount
+      type: object
+      description: Gauge tracking the number of broker pods per configuration and node
+      properties:
+        configuration:
+          type: string
+          description: Name of the Akri Configuration resource
+          example: onvif-camera
+        node:
+          type: string
+          description: Kubernetes node name
+          example: node-01
+        value:
+          type: number
+          description: Current count of broker pods
+          example: 1
+    AkriConfiguration:
+      title: AkriConfiguration
+      type: object
+      description: >-
+        Akri Configuration custom resource (configurations.akri.sh) that
+        specifies device discovery settings and optional broker workload
+        deployment specifications.
+      properties:
+        apiVersion:
+          type: string
+          description: API version of the Akri Configuration resource
+          example: akri.sh/v0
+        kind:
+          type: string
+          description: Resource kind
+          example: Configuration
+        metadata:
+          type: object
+          description: Kubernetes object metadata
+          properties:
+            name:
+              type: string
+              description: Name of the configuration
+              example: onvif-camera
+            namespace:
+              type: string
+              description: Kubernetes namespace
+              example: default
+        spec:
+          type: object
+          description: Configuration specification
+          properties:
+            discoveryHandler:
+              type: object
+              description: Discovery Handler settings for device discovery
+              properties:
+                name:
+                  type: string
+                  description: Name of the Discovery Handler to use
+                  example: onvif
+                discoveryDetails:
+                  type: string
+                  description: Protocol-specific discovery details as a string
+                  example: "ipAddresses:\\n  action: Exclude\\n  items:\\n  - 10.0.0.1"
+                discoveryProperties:
+                  type: array
+                  description: Additional key-value properties for Discovery Handler
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: USERNAME_LIST
+                      value:
+                        type: string
+                        example: admin
+            capacity:
+              type: integer
+              description: Maximum number of broker replicas per device
+              example: 1
+    AkriInstance:
+      title: AkriInstance
+      type: object
+      description: >-
+        Akri Instance custom resource (instances.akri.sh) representing a
+        single discovered device. Automatically created and destroyed as
+        devices appear and disappear.
+      properties:
+        apiVersion:
+          type: string
+          description: API version of the Akri Instance resource
+          example: akri.sh/v0
+        kind:
+          type: string
+          description: Resource kind
+          example: Instance
+        metadata:
+          type: object
+          description: Kubernetes object metadata
+          properties:
+            name:
+              type: string
+              description: Instance name in format configuration-name-hash
+              example: onvif-camera-a1b2c3
+            namespace:
+              type: string
+              description: Kubernetes namespace
+              example: default
+        spec:
+          type: object
+          description: Instance specification
+          properties:
+            configurationName:
+              type: string
+              description: Name of the parent Configuration resource
+              example: onvif-camera
+            shared:
+              type: boolean
+              description: Whether device is shared across multiple nodes
+              example: false
+            nodes:
+              type: array
+              description: List of nodes that can access this device
+              items:
+                type: string
+              example:
+                - node-01
+                - node-02
+            deviceUsage:
+              type: object
+              description: Map of slot names to broker pod names
+              additionalProperties:
+                type: string
+            metadata:
+              type: object
+              description: Device-specific metadata from discovery
+              additionalProperties:
+                type: string
+tags:
+  - name: Metrics
+    description: Prometheus metrics endpoints for Akri Agent, Controller, and broker pods

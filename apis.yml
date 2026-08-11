@@ -88,9 +88,18 @@ apis:
     url: examples/akri-akri-configuration-example.json
   - type: Examples
     url: examples/akri-akri-instance-example.json
-  - type: X-NaftikoCapability
-    url: capabilities/metrics-metrics.yaml
 common:
+- type: IssueTracker
+  url: https://github.com/project-akri/akri/issues
+- type: Releases
+  url: https://github.com/project-akri/akri/releases
+- type: SecurityPolicy
+  url: https://github.com/project-akri/akri/blob/main/SECURITY.md
+- type: CodeOfConduct
+  url: https://github.com/project-akri/akri/blob/main/CODE_OF_CONDUCT.md
+- type: License
+  name: Apache-2.0
+  url: https://github.com/project-akri/akri/blob/main/LICENSE
 - type: AgenticAccess
   url: agentic-access/akri-agentic-access.yml
 - type: DomainSecurity

@@ -30,7 +30,7 @@ description: Akri is a CNCF Sandbox project that exposes heterogeneous leaf devi
   Discovery Handlers for ONVIF, OPC UA, and udev, with automatic workload scheduling and high availability.
 created: '2025-01-01'
 modified: '2026-05-19'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: akri:akri-metrics-api
   name: Akri Metrics API

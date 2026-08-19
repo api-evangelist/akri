@@ -1,0 +1,102 @@
+{
+  "item": [
+    {
+      "id": "ded66ac7-127f-4297-baca-8aa5cab529f9",
+      "name": "Metrics",
+      "description": {
+        "content": "Prometheus metrics endpoints for Akri Agent, Controller, and broker pods",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b5c92f0f-1abb-499d-b06c-f2bcca926ac0",
+          "name": "Akri Get Prometheus Metrics",
+          "request": {
+            "name": "Akri Get Prometheus Metrics",
+            "description": {
+              "content": "Returns Prometheus-formatted metrics for the Akri Agent, Controller, or broker pods. Includes instance discovery counts, discovery response results, discovery latency histograms, and broker pod counts.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "metrics"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a2785676-c00e-4338-bd46-f75b6d0e5d9c",
+              "name": "Prometheus metrics in text exposition format",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "# HELP akri_instance_count Number of discovered Akri instances\n# TYPE akri_instance_count gauge\nakri_instance_count{configuration=\"onvif-camera\",shared=\"false\"} 3\n# HELP akri_discovery_response_result Discovery handler response results\n# TYPE akri_discovery_response_result counter\nakri_discovery_response_result{configuration=\"onvif-camera\",result=\"success\"} 42\n# HELP akri_discovery_response_time Discovery handler response latency\n# TYPE akri_discovery_response_time histogram\nakri_discovery_response_time_bucket{configuration=\"onvif-camera\",le=\"0.005\"} 10\n# HELP akri_broker_pod_count Number of broker pods deployed\n# TYPE akri_broker_pod_count gauge\nakri_broker_pod_count{configuration=\"onvif-camera\",node=\"node-01\"} 1\n",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ed88842e-dfa7-46a9-af85-ae571cab027a",
+    "name": "Akri Metrics API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Prometheus metrics endpoint exposed by Akri Agent, Controller, and broker pods. Metrics include instance count, discovery response results and latency, and broker pod count for monitoring Akri deployments.\n\nContact Support:\n Name: Akri Community",
+      "type": "text/plain"
+    }
+  }
+}

@@ -48,11 +48,12 @@ accessModel:
   generated: '2026-07-22'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/akri.png
-description: Akri is a CNCF Sandbox project that exposes heterogeneous leaf devices (such as IP cameras and USB devices) as
-  resources in a Kubernetes cluster. It enables dynamic discovery and utilization of IoT edge devices through protocol-specific
-  Discovery Handlers for ONVIF, OPC UA, and udev, with automatic workload scheduling and high availability.
+description: Akri is a CNCF Sandbox project that exposes heterogeneous leaf devices (such as IP cameras
+  and USB devices) as resources in a Kubernetes cluster. It enables dynamic discovery and utilization
+  of IoT edge devices through protocol-specific Discovery Handlers for ONVIF, OPC UA, and udev, with automatic
+  workload scheduling and high availability.
 created: '2025-01-01'
-modified: '2026-05-19'
+modified: '2026-09-16'
 specificationVersion: '0.23'
 apis:
 - aid: akri:akri-metrics-api
@@ -112,6 +113,8 @@ apis:
   - type: Examples
     url: examples/akri-akri-instance-example.json
 common:
+- type: Website
+  url: https://akri.sh
 - type: IssueTracker
   url: https://github.com/project-akri/akri/issues
 - type: Releases
@@ -155,71 +158,75 @@ common:
 - type: Features
   data:
   - name: Dynamic Device Discovery
-    description: Automatically discovers heterogeneous leaf devices (IP cameras, USB devices, industrial sensors) across Kubernetes
-      cluster nodes using protocol-specific Discovery Handlers.
+    description: Automatically discovers heterogeneous leaf devices (IP cameras, USB devices, industrial
+      sensors) across Kubernetes cluster nodes using protocol-specific Discovery Handlers.
   - name: ONVIF Discovery Handler
-    description: Discovers IP cameras via ONVIF standards and RTSP streams, with filtering by IP address, MAC address, ONVIF
-      scopes, and device UUIDs.
+    description: Discovers IP cameras via ONVIF standards and RTSP streams, with filtering by IP address,
+      MAC address, ONVIF scopes, and device UUIDs.
   - name: OPC UA Discovery Handler
-    description: Discovers industrial automation servers and Local Discovery Servers via OPC UA protocol, supporting x509
-      certificate authentication for secure connections.
+    description: Discovers industrial automation servers and Local Discovery Servers via OPC UA protocol,
+      supporting x509 certificate authentication for secure connections.
   - name: udev Discovery Handler
-    description: Discovers locally attached hardware (USB devices, cameras, microphones) on Linux nodes using udev rules with
-      kernel device name and capability filtering.
+    description: Discovers locally attached hardware (USB devices, cameras, microphones) on Linux nodes
+      using udev rules with kernel device name and capability filtering.
   - name: Automatic Workload Scheduling
-    description: Automatically schedules broker Pods or Jobs per discovered device based on Akri Configuration specifications,
-      managing the full workload lifecycle.
+    description: Automatically schedules broker Pods or Jobs per discovered device based on Akri Configuration
+      specifications, managing the full workload lifecycle.
   - name: High Availability
-    description: Multiple nodes can access a single leaf device, ensuring service continuity if a node fails. Supports multi-node
-      device reservation.
+    description: Multiple nodes can access a single leaf device, ensuring service continuity if a node
+      fails. Supports multi-node device reservation.
   - name: Kubernetes Custom Resources
-    description: 'Two CRDs: configurations.akri.sh for discovery specification and instances.akri.sh representing each discovered
-      device as a Kubernetes resource.'
+    description: 'Two CRDs: configurations.akri.sh for discovery specification and instances.akri.sh representing
+      each discovered device as a Kubernetes resource.'
   - name: Extensible Discovery Handler Framework
     description: Community can implement custom Discovery Handlers as DaemonSets using the akri-discovery-handler-template,
       enabling support for any device protocol.
   - name: Prometheus Metrics
-    description: Built-in Prometheus metrics on port 8080 for instance count, discovery response results, discovery latency,
-      and broker pod count, with Grafana visualization support.
+    description: Built-in Prometheus metrics on port 8080 for instance count, discovery response results,
+      discovery latency, and broker pod count, with Grafana visualization support.
   - name: Multi-Architecture Support
-    description: Supports Linux nodes on amd64, arm64v8, and arm32v7 architectures with Kubernetes v1.16+, K3s, and MicroK8s
-      distributions.
+    description: Supports Linux nodes on amd64, arm64v8, and arm32v7 architectures with Kubernetes v1.16+,
+      K3s, and MicroK8s distributions.
 - type: UseCases
   data:
   - name: Edge IoT Device Management
-    description: Expose and manage IoT leaf devices such as IP cameras and USB sensors as first-class Kubernetes resources
-      for edge computing workloads.
+    description: Expose and manage IoT leaf devices such as IP cameras and USB sensors as first-class
+      Kubernetes resources for edge computing workloads.
   - name: Industrial Automation Integration
-    description: Connect industrial OPC UA servers and automation equipment to Kubernetes clusters for real-time monitoring
-      and control workflows.
+    description: Connect industrial OPC UA servers and automation equipment to Kubernetes clusters for
+      real-time monitoring and control workflows.
   - name: Computer Vision at the Edge
-    description: Deploy ONVIF-compliant IP camera brokers automatically as cameras are discovered, enabling distributed computer
-      vision processing.
+    description: Deploy ONVIF-compliant IP camera brokers automatically as cameras are discovered, enabling
+      distributed computer vision processing.
   - name: Dynamic Hardware Resource Scheduling
-    description: Automatically schedule GPU, FPGA, or specialized hardware workloads based on real-time device availability
-      across cluster nodes.
+    description: Automatically schedule GPU, FPGA, or specialized hardware workloads based on real-time
+      device availability across cluster nodes.
   - name: Heterogeneous Device Fleet Management
-    description: Manage fleets of diverse edge devices with different protocols from a single Kubernetes control plane using
-      unified Configuration resources.
+    description: Manage fleets of diverse edge devices with different protocols from a single Kubernetes
+      control plane using unified Configuration resources.
 - type: Integrations
   data:
   - name: Prometheus
-    description: Native Prometheus metrics integration via ServiceMonitor and PodMonitor custom resources, with Grafana visualization
-      support.
+    description: Native Prometheus metrics integration via ServiceMonitor and PodMonitor custom resources,
+      with Grafana visualization support.
   - name: Helm
-    description: Official Helm chart packaging for deploying Akri Controller, Agent DaemonSet, and Discovery Handler DaemonSets.
+    description: Official Helm chart packaging for deploying Akri Controller, Agent DaemonSet, and Discovery
+      Handler DaemonSets.
   - name: Kubernetes Device Plugin Framework
-    description: Extends the Kubernetes Device Plugin Framework with edge-specific capabilities for heterogeneous leaf device
-      management.
+    description: Extends the Kubernetes Device Plugin Framework with edge-specific capabilities for heterogeneous
+      leaf device management.
   - name: ONVIF
-    description: Built-in ONVIF protocol support for discovering and managing standards-compliant IP cameras and video devices.
+    description: Built-in ONVIF protocol support for discovering and managing standards-compliant IP cameras
+      and video devices.
   - name: OPC UA
-    description: Built-in OPC UA protocol support for industrial automation device discovery with certificate-based security.
+    description: Built-in OPC UA protocol support for industrial automation device discovery with certificate-based
+      security.
   - name: Linux udev
-    description: Built-in udev integration for discovering locally attached hardware devices on Linux Kubernetes nodes.
+    description: Built-in udev integration for discovering locally attached hardware devices on Linux
+      Kubernetes nodes.
   - name: CNCF Ecosystem
-    description: CNCF Sandbox project integrating with cloud native tooling including K3s, MicroK8s, and standard Kubernetes
-      distributions.
+    description: CNCF Sandbox project integrating with cloud native tooling including K3s, MicroK8s, and
+      standard Kubernetes distributions.
 - type: LlmsText
   url: https://docs.akri.sh/llms.txt
 maintainers:

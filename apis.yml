@@ -1,6 +1,9 @@
 aid: akri
 url: https://raw.githubusercontent.com/api-evangelist/akri/refs/heads/main/apis.yml
 name: Akri
+x-docs-platform: gitbook
+x-docs-platform-confidence: high
+x-docs-platform-checked: 2026-09-17
 tags:
 - Device Management
 - Edge Computing

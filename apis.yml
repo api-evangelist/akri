@@ -10,7 +10,7 @@ tags:
 - IoT
 - Kubernetes
 - CNCF
-- Open-Source
+- Open Source
 - OPC UA
 - ONVIF
 - udev
@@ -24,6 +24,7 @@ tags_raw:
 - OPC UA
 - ONVIF
 - udev
+- Open-Source
 type: Index
 deliveryModel:
   model: self-hosted
